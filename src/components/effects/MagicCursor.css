@@ -1,0 +1,109 @@
+.magic-cursor,
+.magic-cursor * {
+  pointer-events: none;
+}
+
+.magic-cursor {
+  /* Local cursor accents; the portfolio's shared color tokens remain unchanged. */
+  --magic-cursor-ready: 1;
+  --cursor-outline: #7750AC;
+  --cursor-center: #50336F;
+  --cursor-aura: #9364CD;
+  --cursor-pink: #EA91B9;
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  z-index: 30;
+}
+
+.magic-cursor-dot,
+.magic-cursor-ring,
+.magic-cursor-aura,
+.magic-cursor-burst,
+.magic-click-ripple,
+.magic-click-sparkle {
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+}
+
+.magic-cursor-dot,
+.magic-cursor-ring,
+.magic-cursor-aura,
+.magic-click-ripple {
+  border-radius: 50%;
+}
+
+.magic-cursor-dot {
+  width: 6px;
+  height: 6px;
+  background: var(--cursor-center);
+  box-shadow: 0 0 0 1px #faf9f680;
+  z-index: 2;
+}
+
+.magic-cursor-ring {
+  width: 40px;
+  height: 40px;
+  border: 1.5px solid var(--cursor-outline);
+  background: #9364cd0d;
+  z-index: 1;
+  will-change: transform, opacity;
+}
+
+.magic-cursor-aura {
+  width: 80px;
+  height: 80px;
+  background: radial-gradient(circle,
+    color-mix(in srgb, var(--cursor-aura) 32%, transparent) 8%,
+    color-mix(in srgb, var(--cursor-aura) 17%, transparent) 38%,
+    color-mix(in srgb, var(--cursor-aura) 4%, transparent) 60%, transparent 72%);
+  will-change: transform, opacity;
+}
+
+.magic-cursor:not([data-follow-enabled="true"]) :is(.magic-cursor-dot, .magic-cursor-ring, .magic-cursor-aura) {
+  display: none;
+}
+
+.magic-cursor-burst {
+  width: 0;
+  height: 0;
+  overflow: visible;
+  /* Only click effects sit above the following ring and dot. */
+  z-index: 3;
+}
+
+.magic-click-ripple {
+  width: 36px;
+  height: 36px;
+  border: 2px solid #8250B8;
+  box-shadow: 0 0 5px #ea91b940;
+}
+
+.magic-click-sparkle {
+  width: 11px;
+  height: 11px;
+  background: #8250B8;
+  clip-path: polygon(50% 0, 65% 35%, 100% 50%, 65% 65%, 50% 100%, 35% 65%, 0 50%, 35% 35%);
+}
+
+.magic-click-sparkle:nth-child(3n) { background: #CD5F98; }
+.magic-click-sparkle:nth-child(3n + 1) { background: #5D85CF; }
+
+/* JS sets this only after drawing a styled dot; native cursors are the default. */
+@media (any-hover: hover) and (any-pointer: fine) and (prefers-reduced-motion: no-preference) and (forced-colors: none) {
+  html[data-magic-cursor-active="true"],
+  html[data-magic-cursor-active="true"] * {
+    cursor: none !important;
+  }
+  html[data-magic-cursor-active="true"] :is(input:not([type="button"]):not([type="submit"]):not([type="reset"]), textarea, select, [contenteditable]:not([contenteditable="false"]), iframe, dialog, [role="dialog"], [popover]),
+  html[data-magic-cursor-active="true"] :is(dialog, [role="dialog"], [popover], [contenteditable]:not([contenteditable="false"])) * {
+    cursor: revert !important;
+  }
+}
+
+/* CSS also protects preference changes before the JS media-query event arrives. */
+@media (prefers-reduced-motion: reduce), (forced-colors: active) {
+  .magic-cursor { display: none; }
+}
