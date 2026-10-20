@@ -408,7 +408,8 @@
 
 .mochi-caption {
   position: relative;
-  margin-top: 34px;
+  /* Reserve space for the interaction button beneath the platform. */
+  margin-top: 90px;
   text-align: center;
   font: 750 14px var(--font-heading);
 }
