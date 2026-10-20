@@ -1,0 +1,98 @@
+/* Contained within the existing Hero scene; no changes to its dimensions or tokens. */
+.mascot-root {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+
+.mascot-viewport {
+  position: absolute;
+  /* Translate the existing framing down 60px; preserve its size and camera scale. */
+  inset: 25px -30px -35px;
+  pointer-events: none;
+}
+
+.mascot-interaction {
+  position: absolute;
+  top: calc(100% + 25px);
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+}
+
+@media (max-width: 760px) {
+  .mascot-viewport {
+    /* The shorter mobile scene needs a 55px offset to reach the same oval center. */
+    inset: 20px -30px -30px;
+  }
+}
+
+.mascot-hello {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  min-height: 44px;
+  padding: 8px 14px;
+  color: var(--color-ink);
+  background: var(--color-cream);
+  border: 1px solid #beadd4;
+  border-radius: 12px;
+  font-size: 11px;
+  box-shadow: 0 4px 12px #5143650d;
+}
+
+.mascot-hello:hover:not(:disabled) {
+  background: var(--color-mint);
+  transform: translateY(-2px);
+}
+
+.mascot-hello:disabled {
+  opacity: 0.65;
+  cursor: default;
+}
+
+.mascot-hello > span {
+  color: #755591;
+}
+
+.mascot-fallback {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  text-align: center;
+  color: var(--color-ink);
+}
+
+.mascot-fallback > span {
+  color: #76558e;
+  font-size: 32px;
+}
+
+.mascot-fallback > p {
+  font: 750 18px var(--font-heading);
+  margin: 12px 0 8px;
+}
+
+.mascot-fallback > small {
+  max-width: 220px;
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1.7;
+}
+
+.mascot-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}

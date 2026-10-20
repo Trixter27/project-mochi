@@ -1,7 +1,14 @@
+import { lazy, Suspense } from 'react'
 import { Icon } from '../Icon'
 import { Reveal } from '../Reveal'
+import { MochiBoundary, MochiFallback } from '../mascot/MochiFallback'
+import '../mascot/MochiScene.css'
 
-// The .mochi-scene placeholder is the future dedicated 3D mascot mount location.
+const MochiScene = lazy(() => import('../mascot/MochiScene').catch(error => {
+  if (import.meta.env.DEV) console.error('[Mochi] Scene import failed', error)
+  throw error
+}))
+
 export function Hero() {
   return <section id="home" className="hero-section" aria-label="Introduction">
     <div className="hero-grain" aria-hidden="true" />
@@ -16,13 +23,13 @@ export function Hero() {
       <Reveal className="scene-wrapper" delay={0.15}>
         <div className="scene-orbit orbit-one" aria-hidden="true" /><div className="scene-orbit orbit-two" aria-hidden="true" />
         <span className="scene-spark sparkle-one" aria-hidden="true">✦</span><span className="scene-spark sparkle-two" aria-hidden="true">✧</span><span className="scene-dot" aria-hidden="true" />
-        <div className="scene-tag"><span className="status-dot" />A little friend, coming soon</div>
-        <div className="mochi-scene" role="img" aria-label="Reserved space for the future interactive 3D Mochi robot scene. No mascot is rendered yet.">
+        <div className="scene-tag"><span className="status-dot" />A little friend, happy you’re here</div>
+        <div className="mochi-scene" role="group" aria-label="Meet Mochi, your shy single-wheel robot companion">
           <div className="scene-coordinate coord-top" aria-hidden="true">+</div><div className="scene-coordinate coord-bottom" aria-hidden="true">+</div>
-          <div className="scene-content"><span className="scene-symbol" aria-hidden="true">✳</span><p>Saving a spot<br />for <strong>Mochi.</strong></p><span className="scene-label">FUTURE 3D SCENE</span></div>
+          <MochiBoundary label="Scene loader"><Suspense fallback={<MochiFallback loading />}><MochiScene /></Suspense></MochiBoundary>
           <div className="scene-platform" aria-hidden="true" />
         </div>
-        <p className="mochi-caption">Tiny wheels. Big personality.<span>Meet my shy robot companion in a future update.</span></p>
+        <p className="mochi-caption">One tiny wheel. Big personality.<span>A little shy at first. Say hello and watch him warm up.</span></p>
       </Reveal>
     </div>
     <div className="hero-bottom container"><span>IDEAS → CODE → LITTLE CREATIONS</span><a href="#about">A little more below<span aria-hidden="true">↓</span></a><span className="hero-bottom-star" aria-hidden="true">✦</span></div>
