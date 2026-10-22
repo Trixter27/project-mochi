@@ -1,3 +1,4 @@
+import { TiltCard } from '../effects/PointerEffects'
 import { Reveal } from '../Reveal'
 import { SectionHeading } from '../SectionHeading'
 
@@ -11,6 +12,6 @@ const tools = [
 export function Toolbox() {
   return <section id="toolbox" className="toolbox-section" aria-label="Toolbox"><div className="container section">
     <Reveal className="section-title-row"><SectionHeading number="02" eyebrow="THE TOOLBOX" title="A few of my building blocks." /><p className="section-side-note">The technologies bringing<br />this little corner to life.</p></Reveal>
-    <ul className="tool-grid">{tools.map((tool, index) => <Reveal as="li" className="tool-reveal" variant="card" delay={index * 0.055} key={tool.name}><div className="tool-card"><span className={`tool-mark ${tool.className}`} aria-hidden="true">{tool.mark}</span><h3>{tool.name}</h3><p>{tool.description}</p></div></Reveal>)}</ul>
+    <ul className="tool-grid">{tools.map((tool, index) => <Reveal as="li" className="tool-reveal" variant="card" delay={index * 0.055} key={tool.name}><TiltCard><div className="tool-card"><span className={`tool-mark ${tool.className}`} aria-hidden="true">{tool.mark}</span><h3>{tool.name}</h3><p>{tool.description}</p></div></TiltCard></Reveal>)}</ul>
   </div></section>
 }
