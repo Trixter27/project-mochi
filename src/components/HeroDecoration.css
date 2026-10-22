@@ -1,0 +1,56 @@
+.hero-decoration {
+  position: absolute;
+  pointer-events: none;
+}
+
+.hero-float {
+  display: block;
+  width: 100%;
+  height: 100%;
+  animation: hero-float var(--float-duration) ease-in-out var(--float-phase) infinite;
+  animation-play-state: paused;
+}
+
+.hero-section[data-ambient-running="true"] .hero-float { animation-play-state: running; }
+.heading-star-float {
+  display: inline-block;
+  pointer-events: none;
+  --float-x: 7px;
+  --float-y: -20px;
+  --float-turn: 9deg;
+  animation: hero-float 4.6s ease-in-out infinite;
+  animation-play-state: paused;
+}
+.hero-section[data-ambient-running="true"] .heading-star-float { animation-play-state: running; }
+.hero-section[data-reduced-motion="true"] .heading-star-float { animation: none; }
+.hero-float svg { display: block; width: 100%; height: 100%; fill: currentColor; stroke: currentColor; stroke-width: 1.5; stroke-linejoin: round; }
+.hero-decoration.sparkle-one { width: 40px; height: 40px; color: var(--color-cream); }
+.hero-decoration.sparkle-two { width: 38px; height: 38px; color: var(--color-pink); }
+.hero-decoration.scene-dot { background: none; }
+.hero-shape-peach { background: var(--color-peach); border-radius: 50%; }
+.hero-shape-ring { border: 3px solid var(--color-blue); border-radius: 50%; }
+.hero-shape-pebble { background: var(--color-pink); border-radius: 9px; }
+.hero-shape-mint { background: var(--color-mint); border-radius: 50% 50% 38% 38%; }
+
+/* Use the breathing room above the copy and the outer gutter, not its text area. */
+.hero-copy-ring { top: 119px; left: 9%; width: 24px; height: 24px; }
+.hero-copy-pebble { top: 114px; left: 43%; width: 18px; height: 18px; }
+.hero-edge-mint { top: 62%; left: 2%; width: 15px; height: 21px; }
+
+@keyframes hero-float {
+  0%, 100% { transform: translate3d(0, 0, 0) rotate(0deg); }
+  50% { transform: translate3d(var(--float-x), var(--float-y), 0) rotate(var(--float-turn)); }
+}
+
+@media (max-width: 760px) {
+  .hero-copy-pebble, .hero-edge-mint { display: none; }
+  .hero-copy-ring { top: 91px; left: auto; right: 9%; width: 18px; height: 18px; }
+  .hero-decoration.sparkle-one { width: 32px; height: 32px; }
+  .hero-decoration.sparkle-two { width: 28px; height: 28px; }
+}
+
+.hero-section[data-reduced-motion="true"] .hero-float { animation: none; }
+@media (prefers-reduced-motion: reduce) {
+  .hero-float { animation: none; }
+  .heading-star-float { animation: none; }
+}
