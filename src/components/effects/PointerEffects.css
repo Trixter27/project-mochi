@@ -1,0 +1,12 @@
+.magnetic-link { display: inline-flex; border-radius: 13px; }
+.magnetic-surface { display: inline-flex; pointer-events: none; }
+.magnetic-surface > .button { transition: background-color .2s, color .2s, box-shadow .2s, transform .2s; }
+.magnetic-link:hover .button { transform: translateY(-3px); }
+.magnetic-link:hover .button-dark { background: #555067; }
+.magnetic-link:hover .button-light { background: #fffdf7; }
+.pointer-tilt, .pointer-tilt-motion { height: 100%; min-width: 0; }
+.pointer-tilt-motion > .tool-card { height: 100%; }
+
+@media (prefers-reduced-motion: reduce), (hover: none), (pointer: coarse) {
+  .magnetic-surface, .pointer-tilt-motion { transform: none !important; }
+}

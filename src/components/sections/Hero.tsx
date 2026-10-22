@@ -2,6 +2,7 @@ import { lazy, Suspense, useEffect, useRef, useState } from 'react'
 import { motion, useInView, useScroll, useTransform } from 'motion/react'
 import { HeroDecoration } from '../HeroDecoration'
 import { heroAmbientRunning } from '../heroDecorations'
+import { MagneticButton } from '../effects/PointerEffects'
 import { Icon } from '../Icon'
 import { Reveal } from '../Reveal'
 import { HERO_DEPTH, HERO_SCROLL_RANGE } from '../animationPresets'
@@ -42,7 +43,7 @@ export function Hero() {
         <p className="welcome-pill"><span aria-hidden="true">✦</span>Welcome to my little corner of the internet</p>
         <h1>Hi there!<br />I'm <span>Koustubh!</span><span className="heading-star" aria-hidden="true"><span className="heading-star-float">✳</span></span></h1>
         <p className="hero-description">A Computer Engineering student who loves turning big ideas into neat little creations.</p>
-        <div className="hero-actions flex flex-wrap gap-3"><a className="button button-dark" href="#projects">Explore my work<Icon name="arrow" /></a><a className="button button-light" href="#about">A little about me<span aria-hidden="true">↗</span></a></div>
+        <div className="hero-actions flex flex-wrap gap-3"><MagneticButton className="button button-dark" href="#projects">Explore my work<Icon name="arrow" /></MagneticButton><MagneticButton className="button button-light" href="#about">A little about me<span aria-hidden="true">↗</span></MagneticButton></div>
         <p className="hero-note"><span className="little-line" aria-hidden="true" />Made with curiosity & a little bit of magic.</p>
       </Reveal></motion.div>
       <Reveal className="scene-wrapper" delay={0.15}>
