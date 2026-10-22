@@ -384,6 +384,10 @@
   color: #fff5d4;
 }
 
+.scene-spark, .scene-orbit, .scene-dot {
+  pointer-events: none;
+}
+
 .sparkle-one {
   top: 55px;
   right: 18px;
@@ -579,6 +583,23 @@
   border: 1px solid #e6e1e9;
   border-radius: 17px;
   transition: transform .2s, box-shadow .2s;
+}
+
+/* Entry motion belongs to the list item; hover motion stays on its inner card. */
+.tool-reveal {
+  min-width: 0;
+}
+
+.tool-reveal > .tool-card {
+  height: 100%;
+}
+
+/* Visible even before hydration/preference subscriptions settle. */
+@media (prefers-reduced-motion: reduce) {
+  .cinematic-reveal {
+    opacity: 1 !important;
+    transform: none !important;
+  }
 }
 
 .tool-card:hover {
@@ -1285,21 +1306,23 @@
   .tool-grid {
     grid-template-columns: repeat(2, 1fr);
   }
-  .tool-card:last-child {
+  .tool-reveal:last-child {
     grid-column: 1 / -1;
+  }
+  .tool-reveal:last-child .tool-card {
     display: grid;
     grid-template-columns: 44px 1fr;
     column-gap: 15px;
     align-items: center;
   }
-  .tool-card:last-child .tool-mark {
+  .tool-reveal:last-child .tool-mark {
     grid-row: 1 / 3;
     margin: 0;
   }
-  .tool-card:last-child h3 {
+  .tool-reveal:last-child h3 {
     margin: 0;
   }
-  .tool-card:last-child p {
+  .tool-reveal:last-child p {
     max-width: none;
   }
   .contact-content h2 {

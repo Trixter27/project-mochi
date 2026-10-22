@@ -1,0 +1,28 @@
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 16px;
+  right: 16px;
+  height: 3px;
+  border-radius: 999px;
+  overflow: hidden;
+  background: color-mix(in srgb, var(--color-lavender) 40%, transparent);
+  z-index: 15;
+  pointer-events: none;
+}
+
+.scroll-progress-fill {
+  height: 100%;
+  background: #8c789d;
+  border-radius: inherit;
+  transform-origin: left center;
+  pointer-events: none;
+}
+
+@media (max-width: 760px) {
+  .scroll-progress { left: 12px; right: 12px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scroll-progress { display: none; }
+}
