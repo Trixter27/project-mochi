@@ -1,0 +1,19 @@
+.car-stage {
+  position: relative;
+  height: 230px;
+  margin: 0 0 24px;
+  border-radius: 24px;
+  background: radial-gradient(ellipse at center, #dccbf533, transparent 68%);
+}
+.car-stage-viewport { position: relative; width: 100%; height: 100%; margin-inline: auto; }
+.car-debug-replay { position: absolute; left: 8px; bottom: 8px; padding: 6px 10px; border: 1px solid var(--border); border-radius: 12px; background: var(--color-cream); color: var(--color-ink); font: 700 12px var(--font-body); }
+.car-hello { position: absolute; border: 0; padding: 0; background: transparent; border-radius: 20px; }
+.car-hello:disabled { pointer-events: none; visibility: hidden; }
+.car-hello-label { position: absolute; bottom: -16px; left: 50%; transform: translateX(-50%); white-space: nowrap; font: 700 10px var(--font-body); color: var(--muted); background: var(--color-cream); border: 1px solid var(--border); border-radius: 20px; padding: 3px 9px; }
+.car-sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.car-fallback { height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 8px; text-align: center; color: var(--muted); padding: 20px; }
+.car-fallback p { font: 800 16px var(--font-heading); color: var(--color-ink); }
+.car-fallback small { font-size: 12px; }
+@media (max-width: 760px) {
+  .car-stage { height: 200px; margin-bottom: 20px; }
+}
