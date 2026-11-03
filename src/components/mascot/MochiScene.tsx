@@ -3,6 +3,8 @@ import { Canvas, useThree } from '@react-three/fiber'
 import { useReducedMotion } from 'motion/react'
 import MochiRobot from './MochiRobot'
 import { MochiBoundary, MochiFallback } from './MochiFallback'
+import { createMochiPointer, observeMochiPointer } from './mochiGaze'
+import { observeMochiFocus } from './mochiFocus'
 
 /** Own the context listener alongside the renderer, including StrictMode cleanup. */
 function ContextGuard({ onReady, onFailure }: { onReady: () => void; onFailure: () => void }) {
@@ -34,18 +36,23 @@ function CanvasFallback() {
 
 export default function MochiScene() {
   const root = useRef<HTMLDivElement>(null)
+  const hello = useRef<HTMLButtonElement>(null)
+  const pointer = useRef(createMochiPointer())
   const descriptionId = useId()
   const reducedMotion = !!useReducedMotion()
   const [entered, setEntered] = useState(false)
   const [inView, setInView] = useState(false)
   const [pageVisible, setPageVisible] = useState(true)
-  const [hovered, setHovered] = useState(false)
   const [focused, setFocused] = useState(false)
   const [request, setRequest] = useState(0)
   const [ready, setReady] = useState(false)
   const [failed, setFailed] = useState(false)
   const onFailure = useCallback(() => { setFailed(true) }, [])
   const onReady = useCallback(() => { setReady(true) }, [])
+
+  useEffect(() => {
+    if (hello.current) return observeMochiFocus(hello.current, setFocused)
+  }, [])
 
   useEffect(() => {
     const visibility = () => setPageVisible(document.visibilityState === 'visible')
@@ -65,11 +72,15 @@ export default function MochiScene() {
   }, [])
 
   const active = inView && pageVisible
+  useEffect(() => {
+    if (!active || reducedMotion || failed) { pointer.current.valid = false; return }
+    return observeMochiPointer(pointer.current, document, window)
+  }, [active, reducedMotion, failed])
   const status = failed ? 'The 3D scene is unavailable.' : !ready ? 'Mochi is getting ready…'
     : request > 0 ? (request % 2 ? 'Mochi sends you a happy little wave!' : 'A shy wave, just for you.')
       : 'A tiny robot. A friendly hello.'
 
-  return <div ref={root} className="mascot-root" onPointerEnter={event => { if (event.pointerType !== 'touch') setHovered(true) }} onPointerLeave={() => setHovered(false)}>
+  return <div ref={root} className="mascot-root">
     <p id={descriptionId} className="mascot-sr-only">Mochi is a shy, pastel blue 3D robot with a big rounded head, expressive eyes, pink cheeks, a mint antenna, long waving arms, and exactly one small central wheel. Use Say hello to make him react.</p>
     <div className="mascot-viewport" aria-hidden="true">
       {failed ? <MochiFallback /> : entered ? <MochiBoundary label="3D Canvas" onFailure={onFailure}>
@@ -94,13 +105,13 @@ export default function MochiScene() {
           <ambientLight intensity={1.5} />
           <directionalLight position={[-3, 5, 5]} intensity={2.5} />
           <directionalLight position={[4, 2, -2]} intensity={0.8} color="#DCCBF5" />
-          <MochiRobot active={active} curious={hovered || focused} request={request} reducedMotion={reducedMotion} />
+          <MochiRobot active={active} curious={focused} request={request} reducedMotion={reducedMotion} pointer={pointer} />
           <ContextGuard onReady={onReady} onFailure={onFailure} />
         </Canvas>
       </MochiBoundary> : <MochiFallback loading />}
     </div>
     <div className="mascot-interaction">
-      <button type="button" className="mascot-hello" aria-describedby={descriptionId} disabled={!ready || failed} onClick={() => setRequest(value => value + 1)} onFocus={() => setFocused(true)} onBlur={() => setFocused(false)}>
+      <button ref={hello} type="button" className="mascot-hello" aria-describedby={descriptionId} disabled={!ready || failed} onClick={() => setRequest(value => value + 1)}>
         <span aria-hidden="true">✦</span> Say hello to Mochi
       </button>
       <span className="mascot-sr-only" role="status" aria-live="polite" aria-atomic="true">{status}</span>
